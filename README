@@ -1,0 +1,33 @@
+=======
+Decorum
+=======
+
+Decorum is a simple tool which aims to make it easier to write flexible
+and simple decorators. It can also act similarly to `functools.wraps`.
+
+Typical usage looks like this:
+
+    from decorum import decorator
+    
+    class my_decorator(decorator):
+        def wraps(self, f):
+            print "I'm returning the function! You can keep it!" 
+            return f
+
+Decorum makes lets you write decorators in a unified way. Your decorator can be
+used with or without arguments, and it will work the same way.
+
+    @my_decorator
+    def foo(x): print x
+    
+Is identical to:
+
+    @my_decorator()
+    def foo(x): print x
+
+Writing decorators
+==================
+
+There are two many methods you'll want to use in your subclassed decorators.
+Customize `wraps` to handle the decoration, and return (or not) the wrapped
+function, and use `init` to handle any optional arguments.
