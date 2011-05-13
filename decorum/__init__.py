@@ -4,7 +4,7 @@ class Decorum(object):
     for use with and without arguments.
     """
 
-    keep_attrs = True
+    keep_attrs = ('__doc__', '__name__')
     
     def __init__(self, *args, **kwargs):
         """
@@ -23,11 +23,14 @@ class Decorum(object):
     def __call__(self, f=None, *args, **kwargs):
         """Uses `wrap` to handle decoration, restores `__doc__` and `__name__`"""
         if not callable(f):
-            return self._wrapped(f, *args, **kwargs)
+            if f:
+                return self._wrapped(f, *args, **kwargs)
+            else:
+                return self._wrapped(*args, **kwargs)
         else:
             wrapped = self.wraps(f)
             if self.keep_attrs:
-                for attr in ('__doc__', '__name__'):
+                for attr in self.keep_attrs:
                     try:
                         setattr(wrapped, attr, getattr(f, attr))
                     except AttributeError:
