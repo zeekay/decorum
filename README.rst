@@ -5,7 +5,7 @@ Decorum
 Decorum is a simple tool which aims to make it easier to write flexible
 and simple decorators. It can also act similarly to `functools.wraps`.
 
-Typical usage looks like this:
+Typical usage looks like this::
 
     from decorum import decorator
 
@@ -17,12 +17,12 @@ Typical usage looks like this:
 
 Decorum lets you write decorators with and without arguments in a unified way.
 Your decorator can be used with or without arguments, called or not, and it
-will work the same way.
+will work the same way::
 
     @my_decorator
     def foo(x): print x
 
-Is identical to:
+Is identical to::
 
     @my_decorator()
     def foo(x): print x
@@ -40,7 +40,7 @@ decorum will try to keep assign certain attributes to the wrapped function for y
 and `__name__`. You can set `keep_attrs` to None to turn this off, or provide it with a list of
 attributes you want applied to the returned decorated function.
 
-Here is a slightly fancier example:
+Here is a slightly fancier example::
 
     from decorum import decorator
 
