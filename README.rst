@@ -8,19 +8,20 @@ and simple decorators. It can also act similarly to `functools.wraps`.
 Typical usage looks like this:
 
     from decorum import decorator
-    
+
     @decorator
     class my_decorator:
         def wraps(self, f):
-            print "I'm returning the function! You can keep it!" 
+            print "I'm returning the function! You can keep it!"
             return f
 
-Decorum makes lets you write decorators in a unified way. Your decorator can be
-used with or without arguments, called or not, and it will work the same way.
+Decorum lets you write decorators with and without arguments in a unified way.
+Your decorator can be used with or without arguments, called or not, and it
+will work the same way.
 
     @my_decorator
     def foo(x): print x
-    
+
 Is identical to:
 
     @my_decorator()
@@ -40,14 +41,14 @@ and `__name__`. You can set `keep_attrs` to None to turn this off, or provide it
 attributes you want applied to the returned decorated function.
 
 Here is a slightly fancier example:
-    
+
     from decorum import decorator
-    
+
     @decorator
     class fancy:
         def init(self, arg=None):
             self.arg = arg
-    
+
         def wraps(self, f):
             if self.arg:
                 def newf():
@@ -56,18 +57,17 @@ Here is a slightly fancier example:
                 def newf():
                     print 'wut'
             return newf
-    
+
     @fancy
     def foo():
         pass
     foo()
-    
+
     @fancy('woof')
     def foo():
         pass
     foo()
-    
+
     # prints
     wut
     woof
-    
