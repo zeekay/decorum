@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='Decorum',
-    version='0.4',
+    version='0.4.1',
     author='Zach Kelling',
     author_email='zeekayy@gmail.com',
     packages=['decorum',],
