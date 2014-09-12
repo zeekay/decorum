@@ -3,7 +3,7 @@ Decorum
 =======
 
 Decorum is a simple tool which aims to make it easier to write flexible
-and simple decorators. It can also act similarly to `functools.wraps`.
+and simple decorators. It can also act similarly to ``functools.wraps``.
 
 Typical usage looks like this::
 
