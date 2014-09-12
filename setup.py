@@ -8,5 +8,5 @@ setup(
     packages=['decorum',],
     license='LICENSE',
     description='Tool for writing simple decorators',
-    long_description=open('README').read(),
+    long_description=open('README.rst').read(),
 )
