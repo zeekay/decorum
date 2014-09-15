@@ -1,3 +1,6 @@
+from __future__ import print_function
+
+
 class Decorum(object):
     """
     A decorator class that tries to unify writing decorators
@@ -39,7 +42,7 @@ class Decorum(object):
                     try:
                         setattr(wrapped, attr, getattr(f, attr))
                     except AttributeError:
-                        print 'oops'
+                        print('oops')
                         pass
             return wrapped
 
