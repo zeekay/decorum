@@ -4,4 +4,4 @@ from decorum.decorum import Decorum, decorator
 
 
 __all__ = ['Decorum', 'decorator']
-__version__ = '0.4.4'
+__version__ = '0.4.5'
