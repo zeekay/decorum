@@ -11,6 +11,7 @@ and simple decorators. It can also act similarly to ``functools.wraps``.
 Typical usage looks like this:
 
 .. code:: python
+
     from decorum import decorator
 
     @decorator
@@ -24,12 +25,14 @@ Your decorator can be used with or without arguments, called or not, and it
 will work the same way:
 
 .. code:: python
+
     @my_decorator
     def foo(x): print x
 
 Is identical to:
 
 .. code:: python
+
     @my_decorator()
     def foo(x): print x
 
@@ -52,6 +55,7 @@ function.
 Here is a slightly fancier example:
 
 .. code:: python
+
     from decorum import decorator
 
     @decorator
