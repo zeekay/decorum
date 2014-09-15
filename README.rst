@@ -2,6 +2,9 @@
 Decorum
 =======
 
+.. image:: https://travis-ci.org/zeekay/decorum.png?branch=master
+    :target: https://travis-ci.org/zeekay/decorum
+
 Decorum is a simple tool which aims to make it easier to write flexible
 and simple decorators. It can also act similarly to ``functools.wraps``.
 
