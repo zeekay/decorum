@@ -5,8 +5,13 @@ setup(
     version='0.4.3',
     author='Zach Kelling',
     author_email='zk@monoid.io',
-    packages=['decorum',],
+    packages=['decorum'],
     license='LICENSE',
     description='Tool for writing simple decorators',
     long_description=open('README.rst').read(),
+    classifiers=[
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+    ],
 )

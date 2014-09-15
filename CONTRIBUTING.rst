@@ -65,7 +65,7 @@ Setup a development environment
 
 System requirements:
 
-* `Python`_ version 2.7 (in a `virtualenv`_ if you like).
+* `Python`_ version 2.7, 3.3 or 3.4 (in a `virtualenv`_ if you like).
 * make and wget to use the provided `Makefile`.
 
 Execute:
