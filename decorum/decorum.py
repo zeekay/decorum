@@ -21,7 +21,12 @@ class Decorum(object):
             self.init(*args, **kwargs)
 
     def __call__(self, f=None, *args, **kwargs):
-        """Uses `wrap` to handle decoration, restores `__doc__` and `__name__`"""
+        """Actually run the decorated function.
+
+        Uses :meth:`wrap` to handle decoration. Restores :attr:`__doc__` and
+        :attr:`__name__`.
+
+        """
         if not callable(f):
             if f:
                 return self._wrapped(f, *args, **kwargs)
