@@ -10,31 +10,40 @@ and simple decorators. It can also act similarly to ``functools.wraps``.
 
 Typical usage looks like this:
 
-.. code:: python
+.. code:: pycon
 
-    from decorum import decorator
+   >>> from __future__ import print_function
+   >>> from decorum import decorator
 
-    @decorator
-    class my_decorator:
-        def wraps(self, f):
-            print "I'm returning the function! You can keep it!"
-            return f
+   >>> @decorator
+   ... class my_decorator:
+   ...    def wraps(self, f):
+   ...        print("I'm returning the function! You can keep it!")
+   ...        return f
 
 Decorum lets you write decorators with and without arguments in a unified way.
 Your decorator can be used with or without arguments, called or not, and it
 will work the same way:
 
-.. code:: python
+.. code:: pycon
 
-    @my_decorator
-    def foo(x): print x
+   >>> @my_decorator
+   ... def foo(x):
+   ...     print(x)
+   I'm returning the function! You can keep it!
+
+   >>> foo('bar')
+   bar
 
 Is identical to:
 
-.. code:: python
+.. code:: pycon
 
-    @my_decorator()
-    def foo(x): print x
+   >>> @my_decorator()
+   ... def foo(x):
+   ...     print(x)
+   I'm returning the function! You can keep it!
+
 
 Writing decorators
 ==================
@@ -46,38 +55,72 @@ writing your own decorators. Define a ``wraps`` method to handle the actual
 decoration and return the decorated function, and optionally define an ``init``
 method to handle any arguments you want to accept, and handle basic setup (it's
 called before decoration by ``__init__``, you can use it in a similar fashion
-to a real ``__init__`` method). By default decorum will try to keep assign
-certain attributes to the wrapped function for you, namely ``__doc__`` and
-``__name__``. You can set ``keep_attrs`` to ``None`` to turn this off, or
-provide it with a list of attributes you want applied to the returned decorated
-function.
+to a real ``__init__`` method).
 
 Here is a slightly fancier example:
 
-.. code:: python
+.. code:: pycon
 
-    from decorum import decorator
+   >>> from decorum import decorator
 
-    @decorator
-    class fancy:
-        def init(self, arg=None):
-            self.arg = arg
+   >>> @decorator
+   ... class fancy:
+   ...     def init(self, arg=None):
+   ...         self.arg = arg
+   ...
+   ...     def wraps(self, f):
+   ...         if self.arg:
+   ...             def newf():
+   ...                 print(self.arg)
+   ...         else:
+   ...             def newf():
+   ...                 print('wut')
+   ...         return newf
 
-        def wraps(self, f):
-            if self.arg:
-                def newf():
-                    print self.arg
-            else:
-                def newf():
-                    print 'wut'
-            return newf
+   >>> @fancy
+   ... def foo():
+   ...     pass
 
-    @fancy
-    def foo():
-        pass
-    foo()  # wut
+   >>> foo()
+   wut
 
-    @fancy('woof')
-    def foo():
-        pass
-    foo()  # woof
+   >>> @fancy('woof')
+   ... def foo():
+   ...     pass
+
+   >>> foo()
+   woof
+
+By default decorum will try to keep assign
+certain attributes to the wrapped function for you, namely ``__doc__`` and
+``__name__``.
+
+.. code:: pycon
+
+   >>> import decorum
+
+   >>> @decorum.decorator
+   ... class identity(object):
+   ...     """Noop decorator: does nothing!"""
+
+   >>> @identity
+   ... def my_function():
+   ...     """My function's docstring."""
+
+   >>> print(my_function.__name__)
+   my_function
+   >>> print(my_function.__doc__)
+   My function's docstring.
+
+You can set ``keep_attrs`` to ``None`` to turn this off, or
+provide it with a list of attributes you want applied to the returned decorated
+function.
+
+.. code:: pycon
+
+   >>> @identity(keep_attrs=None)
+   ... def my_function():
+   ...     """My function's docstring."""
+
+   >>> print(my_function.__name__)
+   >>> print(my_function.__doc__)
