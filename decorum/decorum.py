@@ -2,10 +2,7 @@ from __future__ import print_function
 
 
 class Decorum(object):
-    """
-    A decorator class that tries to unify writing decorators
-    for use with and without arguments.
-    """
+    """Decorator class that simplifies writing and testing decorators."""
 
     keep_attrs = ('__doc__', '__name__')
 
@@ -13,6 +10,13 @@ class Decorum(object):
         """
         Unifies decorator interface, so that it can be used
         both with and without arguments the same way.
+
+        >>> decor = Decorum()
+        >>> decor.keep_attrs
+        ('__doc__', '__name__')
+        >>> decor = Decorum(keep_attrs=None)
+        >>> bool(decor.keep_attrs)
+        False
 
         """
         if args and callable(args[0]):
