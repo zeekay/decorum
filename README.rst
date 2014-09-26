@@ -112,13 +112,14 @@ certain attributes to the wrapped function for you, namely ``__doc__`` and
    >>> print(my_function.__doc__)
    My function's docstring.
 
-You can set ``keep_attrs`` to ``None`` to turn this off, or
-provide it with a list of attributes you want applied to the returned decorated
-function.
+The optional ``assigned`` keyword argument can be used to to specify which
+attributes of the original function are assigned directly to the matching
+attributes on the wrapper function. This defaults to ``('__doc__',
+'__name__')``. You can specify ``False`` or ``None`` to disable this.
 
 .. code:: pycon
 
-   >>> @identity(keep_attrs=None)
+   >>> @identity(assigned=None)
    ... def my_function():
    ...     """My function's docstring."""
 

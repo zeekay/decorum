@@ -4,21 +4,23 @@ from __future__ import print_function
 class Decorum(object):
     """Decorator class that simplifies writing and testing decorators."""
 
-    keep_attrs = ('__doc__', '__name__')
-
     def __init__(self, *args, **kwargs):
         """
         Unifies decorator interface, so that it can be used
         both with and without arguments the same way.
 
         >>> decor = Decorum()
-        >>> decor.keep_attrs
+        >>> decor.assigned
         ('__doc__', '__name__')
-        >>> decor = Decorum(keep_attrs=None)
-        >>> bool(decor.keep_attrs)
+        >>> decor = Decorum(assigned=None)
+        >>> bool(decor.assigned)
         False
 
         """
+        self.assigned = ('__doc__', '__name__')
+        if 'assigned' in kwargs:
+            self.assigned = kwargs['assigned']
+
         if args and callable(args[0]):
             # used as decorator without being called
             self.init()
@@ -41,8 +43,8 @@ class Decorum(object):
                 return self._wrapped(*args, **kwargs)
         else:
             wrapped = self.wraps(f)
-            if self.keep_attrs:
-                for attr in self.keep_attrs:
+            if self.assigned:
+                for attr in self.assigned:
                     try:
                         setattr(wrapped, attr, getattr(f, attr))
                     except AttributeError:
