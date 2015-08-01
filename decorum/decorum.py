@@ -19,7 +19,7 @@ class Decorum(object):
 
         """
         #: Function name. Can be overriden with decorated function name,
-        #: depending on values of :py:attr:`assigned` or :attr:`updated`.
+        #: depending on values of :py:attr:`assigned`.
         self.__name__ = self.__class__.__name__
 
         #: Specify which attributes of the original function are assigned
@@ -27,11 +27,6 @@ class Decorum(object):
         self.assigned = functools.WRAPPER_ASSIGNMENTS
         if 'assigned' in kwargs:
             self.assigned = kwargs['assigned']
-        #: Specify which attributes of the decorator are updated with the
-        #: corresponding attributes from the original function.
-        self.updated = functools.WRAPPER_UPDATES
-        if 'updated' in kwargs:
-            self.updated = kwargs['updated']
 
         if args and callable(args[0]):
             # used as decorator without being called
@@ -59,10 +54,7 @@ class Decorum(object):
 
     def wraps(self, f):
         """Wraps the function and returns it"""
-        functools.update_wrapper(self,
-                                 f,
-                                 self.assigned or (),
-                                 self.updated or ())
+        functools.update_wrapper(self, f, self.assigned or (), ())
         return self
 
     def init(self, *args, **kwargs):
