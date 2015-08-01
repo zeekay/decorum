@@ -11,8 +11,8 @@ class Decorum(object):
         both with and without arguments the same way.
 
         >>> decor = Decorum()
-        >>> decor.assigned
-        ('__doc__', '__name__')
+        >>> decor.assigned == functools.WRAPPER_ASSIGNMENTS
+        True
         >>> decor = Decorum(assigned=None)
         >>> bool(decor.assigned)
         False
@@ -24,7 +24,7 @@ class Decorum(object):
 
         #: Specify which attributes of the original function are assigned
         #: directly to the matching attributes on the decorator.
-        self.assigned = ('__doc__', '__name__')
+        self.assigned = functools.WRAPPER_ASSIGNMENTS
         if 'assigned' in kwargs:
             self.assigned = kwargs['assigned']
 
