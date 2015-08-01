@@ -1,3 +1,7 @@
-v0.1, 05-13-2011 -- Initial release.
+Changelog for decorum
+===========================
 
+0.5.1 (2015-08-01)
+------------------
 
+- Add ``url`` attribute to setup.py
