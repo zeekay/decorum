@@ -12,7 +12,7 @@ class Decorum(object):
 
         >>> decor = Decorum()
         >>> decor.assigned
-        ('__module__', '__name__', '__doc__')
+        ('__doc__', '__name__')
         >>> decor = Decorum(assigned=None)
         >>> bool(decor.assigned)
         False
@@ -24,7 +24,7 @@ class Decorum(object):
 
         #: Specify which attributes of the original function are assigned
         #: directly to the matching attributes on the decorator.
-        self.assigned = functools.WRAPPER_ASSIGNMENTS
+        self.assigned = ('__doc__', '__name__')
         if 'assigned' in kwargs:
             self.assigned = kwargs['assigned']
 
@@ -67,7 +67,7 @@ def decorator(cls):
         def __init__(self, *args, **kwargs):
             Decorum.__init__(self, *args, **kwargs)
             if not self.assigned or '__name__' not in self.assigned:
-                self.__name__ = cls.__name__
+                self.__name__ = None
             if not self.assigned or '__doc__' not in self.assigned:
-                self.__doc__ = cls.__doc__
+                self.__doc__ = None
     return decorated
