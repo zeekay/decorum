@@ -118,15 +118,9 @@ attributes on the wrapper function. This defaults to
 ``functools.WRAPPER_ASSIGNMENTS``. You can specify ``False`` or ``None``
 to disable this.
 
-Also the optional ``updated`` keyword argument can be used to specify which
-attributes of the decorator are updated with the corresponding attributes from
-the original function. This defaults to ``functools.WRAPPER_UPDATES``.
-You can specify ``False`` or ``None`` to disable this.
-
-
 .. code:: pycon
 
-   >>> @identity(assigned=None, updated=None)
+   >>> @identity(assigned=None)
    ... def my_function():
    ...     """My function's docstring."""
    >>> print(my_function.__name__)
