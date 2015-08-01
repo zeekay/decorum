@@ -17,7 +17,6 @@ IS_PYTHON2 = sys.version_info[0] == 2
 NAME = 'Decorum'
 DESCRIPTION = 'Tool for writing simple decorators.'
 README = open(os.path.join(here, 'README.rst')).read()
-VERSION = '0.5.1'
 AUTHOR = u'Zach Kelling'
 EMAIL = 'zk@monoid.io'
 LICENSE = 'MIT'
@@ -58,6 +57,6 @@ if __name__ == '__main__':  # Don't run setup() when we import this module.
         packages=PACKAGES,
         setup_requires=SETUP_REQUIREMENTS,
         url=URL,
-        version=VERSION,
+        version='0.5.1',
         zip_safe=False,
     )
