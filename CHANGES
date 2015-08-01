@@ -1,7 +1,7 @@
 Changelog for decorum
 ===========================
 
-0.5.2 (2015-08-01)
+0.5.3 (2015-08-01)
 ------------------
 
 - Changed default value of `assigned` argument.
