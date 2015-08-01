@@ -1,1 +1,7 @@
-include LICENSE README.rst
+recursive-include decorum *
+global-exclude *.pyc
+include AUTHORS
+include CHANGELOG
+include CONTRIBUTING.rst
+include LICENSE
+include README.rst
