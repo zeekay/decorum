@@ -112,16 +112,24 @@ certain attributes to the wrapped function for you, namely ``__doc__`` and
    >>> print(my_function.__doc__)
    My function's docstring.
 
-The optional ``assigned`` keyword argument can be used to to specify which
+The optional ``assigned`` keyword argument can be used to specify which
 attributes of the original function are assigned directly to the matching
-attributes on the wrapper function. This defaults to ``('__doc__',
-'__name__')``. You can specify ``False`` or ``None`` to disable this.
+attributes on the wrapper function. This defaults to
+``functools.WRAPPER_ASSIGNMENTS``. You can specify ``False`` or ``None``
+to disable this.
+
+Also the optional ``updated`` keyword argument can be used to specify which
+attributes of the decorator are updated with the corresponding attributes from
+the original function. This defaults to ``functools.WRAPPER_UPDATES``.
+You can specify ``False`` or ``None`` to disable this.
+
 
 .. code:: pycon
 
-   >>> @identity(assigned=None)
+   >>> @identity(assigned=None, updated=None)
    ... def my_function():
    ...     """My function's docstring."""
-
    >>> print(my_function.__name__)
+   identity
    >>> print(my_function.__doc__)
+   Noop decorator: does nothing!
