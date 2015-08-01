@@ -123,7 +123,7 @@ disable this.
    >>> @identity(assigned=None)
    ... def my_function():
    ...     """My function's docstring."""
-   >>> my_function.__name__ is None
-   True
-   >>> my_function.__doc__ is None
-   True
+   >>> print(my_function.__name__)
+   identity
+   >>> print(my_function.__doc__)
+   Noop decorator: does nothing!

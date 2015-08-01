@@ -66,8 +66,10 @@ def decorator(cls):
     class decorated(cls, Decorum):
         def __init__(self, *args, **kwargs):
             Decorum.__init__(self, *args, **kwargs)
-            if not self.assigned or '__name__' not in self.assigned:
-                self.__name__ = None
-            if not self.assigned or '__doc__' not in self.assigned:
-                self.__doc__ = None
+            for attribute in functools.WRAPPER_ASSIGNMENTS:
+                if not self.assigned or attribute not in self.assigned:
+                    try:
+                        setattr(self, attribute, getattr(cls, attribute))
+                    except AttributeError:
+                        pass
     return decorated
