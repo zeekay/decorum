@@ -1,4 +1,5 @@
 from __future__ import print_function
+import functools
 
 
 class Decorum(object):
@@ -10,14 +11,20 @@ class Decorum(object):
         both with and without arguments the same way.
 
         >>> decor = Decorum()
-        >>> decor.assigned
-        ('__doc__', '__name__')
+        >>> decor.assigned == functools.WRAPPER_ASSIGNMENTS
+        True
         >>> decor = Decorum(assigned=None)
         >>> bool(decor.assigned)
         False
 
         """
-        self.assigned = ('__doc__', '__name__')
+        #: Function name. Can be overriden with decorated function name,
+        #: depending on values of :py:attr:`assigned`.
+        self.__name__ = self.__class__.__name__
+
+        #: Specify which attributes of the original function are assigned
+        #: directly to the matching attributes on the decorator.
+        self.assigned = functools.WRAPPER_ASSIGNMENTS
         if 'assigned' in kwargs:
             self.assigned = kwargs['assigned']
 
@@ -43,18 +50,12 @@ class Decorum(object):
                 return self._wrapped(*args, **kwargs)
         else:
             wrapped = self.wraps(f)
-            if self.assigned:
-                for attr in self.assigned:
-                    try:
-                        setattr(wrapped, attr, getattr(f, attr))
-                    except AttributeError:
-                        print('oops')
-                        pass
             return wrapped
 
     def wraps(self, f):
         """Wraps the function and returns it"""
-        return f
+        functools.update_wrapper(self, f, self.assigned or (), ())
+        return self
 
     def init(self, *args, **kwargs):
         """Passed any possible arguments to decorator"""
@@ -63,5 +64,10 @@ class Decorum(object):
 
 def decorator(cls):
     class decorated(cls, Decorum):
-        pass
+        def __init__(self, *args, **kwargs):
+            Decorum.__init__(self, *args, **kwargs)
+            if not self.assigned or '__name__' not in self.assigned:
+                self.__name__ = None
+            if not self.assigned or '__doc__' not in self.assigned:
+                self.__doc__ = None
     return decorated
