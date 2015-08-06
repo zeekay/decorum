@@ -18,7 +18,7 @@ Typical usage looks like this:
    >>> class my_decorator(Decorum):
    ...    def wraps(self, f):
    ...        print("I'm returning the function! You can keep it!")
-   ...        return f
+   ...        return super(my_decorator, self).wraps(f)
 
 Decorum lets you write decorators with and without arguments in a unified way.
 Your decorator can be used with or without arguments, called or not, and it
@@ -48,15 +48,14 @@ Writing decorators
 ==================
 
 In order to write your own decorators, just subclass ``decorum.Decorum``.
-There are only two methods to be aware of:
 
-* override ``wraps()`` method to handle the actual decoration and return the
-  decorated function;
+There are only three methods to be aware of when writing your own decorators:
 
-* optionally define an ``init`` method to handle any arguments you want to
-  accept, and handle basic setup (it's called before decoration by
-  ``__init__``, you can use it in a similar fashion to a real ``__init__``
-  method).
+* ``init()`` setups the decorator itself;
+
+* ``wraps()`` decorates the function;
+
+* ``call()`` runs the wrapped function and returns result.
 
 Here is a slightly fancier example:
 
@@ -66,30 +65,33 @@ Here is a slightly fancier example:
 
    >>> class fancy(Decorum):
    ...     def init(self, arg=None):
+   ...         super(fancy, self).init()
    ...         self.arg = arg
    ...
    ...     def wraps(self, f):
    ...         if self.arg:
-   ...             def newf():
-   ...                 print(self.arg)
+   ...             newf = lambda: self.arg
    ...         else:
-   ...             def newf():
-   ...                 print('wut')
-   ...         return newf
+   ...             newf = lambda: 'wut'
+   ...         return super(fancy, self).wraps(newf)
+   ...
+   ...     def call(self, *args, **kwargs):
+   ...         result = super(fancy, self).call(*args, **kwargs)
+   ...         return result.upper()
 
    >>> @fancy
    ... def foo():
    ...     pass
 
    >>> foo()
-   wut
+   'WUT'
 
    >>> @fancy('woof')
    ... def foo():
    ...     pass
 
    >>> foo()
-   woof
+   'WOOF'
 
 .. note::
 
