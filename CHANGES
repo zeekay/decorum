@@ -1,10 +1,10 @@
 Changelog for decorum
 ===========================
 
-0.5.5 (unreleased)
+1.0.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added new `call` method.
 
 
 0.5.4 (2015-08-06)
