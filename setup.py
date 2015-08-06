@@ -57,6 +57,6 @@ if __name__ == '__main__':  # Don't run setup() when we import this module.
         packages=PACKAGES,
         setup_requires=SETUP_REQUIREMENTS,
         url=URL,
-        version='0.5.4',
+        version='0.5.5.dev0',
         zip_safe=False,
     )
