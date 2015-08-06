@@ -1,7 +1,7 @@
 Changelog for decorum
 ===========================
 
-0.5.4 (2015-08-01)
+0.5.4 (2015-08-06)
 ------------------
 
 - Preserve attributes of original decorator.
