@@ -13,10 +13,9 @@ Typical usage looks like this:
 .. code:: pycon
 
    >>> from __future__ import print_function
-   >>> from decorum import decorator
+   >>> from decorum import Decorum
 
-   >>> @decorator
-   ... class my_decorator:
+   >>> class my_decorator(Decorum):
    ...    def wraps(self, f):
    ...        print("I'm returning the function! You can keep it!")
    ...        return f
@@ -48,23 +47,24 @@ Is identical to:
 Writing decorators
 ==================
 
-Decorum provides two easy ways to write your own decorators. You can use
-``decorum.decorator`` to decorate decorator classes, or you can directly
-subclass decorum.Decorum. There are only two methods to be aware of when
-writing your own decorators. Define a ``wraps`` method to handle the actual
-decoration and return the decorated function, and optionally define an ``init``
-method to handle any arguments you want to accept, and handle basic setup (it's
-called before decoration by ``__init__``, you can use it in a similar fashion
-to a real ``__init__`` method).
+In order to write your own decorators, just subclass ``decorum.Decorum``.
+There are only two methods to be aware of:
+
+* override ``wraps()`` method to handle the actual decoration and return the
+  decorated function;
+
+* optionally define an ``init`` method to handle any arguments you want to
+  accept, and handle basic setup (it's called before decoration by
+  ``__init__``, you can use it in a similar fashion to a real ``__init__``
+  method).
 
 Here is a slightly fancier example:
 
 .. code:: pycon
 
-   >>> from decorum import decorator
+   >>> from decorum import Decorum
 
-   >>> @decorator
-   ... class fancy:
+   >>> class fancy(Decorum):
    ...     def init(self, arg=None):
    ...         self.arg = arg
    ...
@@ -91,6 +91,29 @@ Here is a slightly fancier example:
    >>> foo()
    woof
 
+.. note::
+
+   You can also use ``decorum.decorator`` to turn classes into decorators.
+   
+   .. code:: pycon
+
+      >>> from decorum import decorator
+
+      >>> @decorator
+      ... class noop:
+      ...     """Override wraps() or init() as always."""
+
+      >>> @noop
+      ... def foo():
+      ...     """Do nothing."""
+
+      >>> isinstance(foo, noop)
+      True
+      >>> isinstance(foo, Decorum)
+      True
+
+   The result is a class that inherits from the original class and Decorum.
+
 By default decorum will try to keep assign
 certain attributes to the wrapped function for you, namely ``__doc__`` and
 ``__name__``.
@@ -99,8 +122,7 @@ certain attributes to the wrapped function for you, namely ``__doc__`` and
 
    >>> import decorum
 
-   >>> @decorum.decorator
-   ... class identity(object):
+   >>> class identity(Decorum):
    ...     """Noop decorator: does nothing!"""
 
    >>> @identity
@@ -127,3 +149,16 @@ disable this.
    identity
    >>> print(my_function.__doc__)
    Noop decorator: does nothing!
+
+
+Testing decorators
+==================
+
+Decorum makes it easy to test custom decorators.
+
+Assert a function has been decorated as expected:
+
+.. code:: pycon
+
+   >>> assert isinstance(my_function, Decorum)
+   >>> assert isinstance(my_function, identity)
