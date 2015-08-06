@@ -1,6 +1,5 @@
 from __future__ import print_function
 import functools
-import warnings
 
 
 class Decorum(object):
@@ -64,10 +63,6 @@ class Decorum(object):
 
 
 def decorator(cls):
-    warnings.warn("decorum.decorator() will be deprecated. "
-                  "Subclass decorum.Decorum instead of decorating classes.",
-                  PendingDeprecationWarning)
-
     class decorated(cls, Decorum):
         def __init__(self, *args, **kwargs):
             Decorum.__init__(self, *args, **kwargs)

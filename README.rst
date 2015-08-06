@@ -91,6 +91,29 @@ Here is a slightly fancier example:
    >>> foo()
    woof
 
+.. note::
+
+   You can also use ``decorum.decorator`` to turn classes into decorators.
+   
+   .. code:: pycon
+
+      >>> from decorum import decorator
+
+      >>> @decorator
+      ... class noop:
+      ...     """Override wraps() or init() as always."""
+
+      >>> @noop
+      ... def foo():
+      ...     """Do nothing."""
+
+      >>> isinstance(foo, noop)
+      True
+      >>> isinstance(foo, Decorum)
+      True
+
+   The result is a class that inherits from the original class and Decorum.
+
 By default decorum will try to keep assign
 certain attributes to the wrapped function for you, namely ``__doc__`` and
 ``__name__``.
