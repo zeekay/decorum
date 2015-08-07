@@ -64,8 +64,8 @@ Here is a slightly fancier example:
    >>> from decorum import Decorum
 
    >>> class fancy(Decorum):
-   ...     def init(self, arg=None):
-   ...         super(fancy, self).init()
+   ...     def init(self, arg=None, *args, **kwargs):
+   ...         super(fancy, self).init(*args, **kwargs)
    ...         self.arg = arg
    ...
    ...     def wraps(self, f):
