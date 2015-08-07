@@ -28,8 +28,6 @@ class Decorum(object):
         #: Specify which attributes of the original function are assigned
         #: directly to the matching attributes on the decorator.
         self.assigned = functools.WRAPPER_ASSIGNMENTS
-        if 'assigned' in kwargs:
-            self.assigned = kwargs.pop('assigned')
 
         if args and callable(args[0]):
             # used as decorator without being called
@@ -58,8 +56,9 @@ class Decorum(object):
         functools.update_wrapper(self, f, self.assigned or (), ())
         return self
 
-    def init(self):
+    def init(self, assigned=functools.WRAPPER_ASSIGNMENTS):
         """Passed any possible arguments to decorator"""
+        self.assigned = assigned
 
     def call(self, *args, **kwargs):
         return self._wrapped(*args, **kwargs)
