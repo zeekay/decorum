@@ -25,10 +25,6 @@ class Decorum(object):
         #: depending on values of :py:attr:`assigned`.
         self.__name__ = self.__class__.__name__
 
-        #: Specify which attributes of the original function are assigned
-        #: directly to the matching attributes on the decorator.
-        self.assigned = functools.WRAPPER_ASSIGNMENTS
-
         if args and callable(args[0]):
             # used as decorator without being called
             self.init()
@@ -47,8 +43,7 @@ class Decorum(object):
         if self._wrapped:
             return self.call(*args, **kwargs)
         else:
-            f = args[0]
-            return self.wraps(f)
+            return self.wraps(args[0])
 
     def wraps(self, f):
         """Wraps the function and returns it"""
@@ -58,7 +53,10 @@ class Decorum(object):
 
     def init(self, assigned=functools.WRAPPER_ASSIGNMENTS):
         """Passed any possible arguments to decorator"""
+        #: Specify which attributes of the original function are assigned
+        #: directly to the matching attributes on the decorator.
         self.assigned = assigned
+        return self
 
     def call(self, *args, **kwargs):
         return self._wrapped(*args, **kwargs)
