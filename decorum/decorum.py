@@ -45,6 +45,10 @@ class Decorum(object):
         else:
             return self.wraps(args[0])
 
+    def __get__(self, instance, owner):
+        """Allows a decorator to decorate an instance method."""
+        return functools.partial(self.call, instance)
+
     def wraps(self, f):
         """Wraps the function and returns it"""
         self._wrapped = f
