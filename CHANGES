@@ -4,7 +4,7 @@ Changelog for decorum
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Implement __get__ to allow instance methods to be decorated.
 
 
 1.0.2 (2015-08-10)
